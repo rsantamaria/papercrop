@@ -7,12 +7,12 @@ Gem::Specification.new do |s|
   s.description   = "Paperclip extension for cropping images"
   s.authors       = ["Ruben Santamaria"]
   s.email         = 'rsantamaria.dev@gmail.com'
-  s.homepage      = 'http://rubygems.org/gems/papercrop'
+  s.homepage      = 'https://github.com/rsantamaria/papercrop'
 
   s.files         = Dir.glob("{lib,vendor}/**/*") + %w(README.md)
   s.require_paths = ["lib"]
 
   s.add_dependency "rails", "~> 3.1"
   s.add_dependency "jquery-rails"
-  s.add_dependency "paperclip", "~> 3.1.3"
+  s.add_dependency "paperclip", "~> 3.1"
 end

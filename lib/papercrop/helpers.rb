@@ -1,6 +1,15 @@
 module Papercrop
   module Helpers
     
+    # Form helper to render the cropping preview box of an attachment.
+    # Box width can be handled by setting the :width option. 
+    # Width is 100 by default. Height is calculated by the aspect ratio.
+    # 
+    #   crop_preview :avatar
+    #   crop_preview :avatar, :width => 150
+    #
+    # @param attachment [Symbol] attachment name
+    # @param opts [Hash]
     def crop_preview(attachment, opts = {})
       attachment = attachment.to_sym
       width      = opts[:width] || 100
@@ -19,6 +28,14 @@ module Papercrop
     end
 
 
+    # Form helper to render the main cropping box of an attachment.
+    # Loads the original image. Initially the cropbox has no limits on dimensions, showing the image at full size.
+    # You can restrict it by setting the :width option to the width you want.
+    #
+    #   cropbox :avatar, :width => 650
+    #
+    # @param attachment [Symbol] attachment name
+    # @param opts [Hash]
     def cropbox(attachment, opts = {})
       attachment      = attachment.to_sym
       original_width  = self.object.image_geometry(attachment, :original).width
