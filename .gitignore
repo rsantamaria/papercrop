@@ -1,1 +1,11 @@
+.rvmrc
+.sass-cache
 *.gem
+*.swp
+**/*.swp
+Gemfile.lock
+test_app/.bundle
+test_app/Gemfile.lock
+test_app/db/*.sqlite3
+test_app/log/*.log
+test_app/tmp

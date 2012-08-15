@@ -40,7 +40,6 @@ module Papercrop
 
         after_update :"reprocess_to_crop_#{attachment_name}_attachment"
       end
-
     end
 
 
@@ -66,6 +65,7 @@ module Papercrop
       end
 
 
+      # Uses method missing to reprocess the attachment callback
       def method_missing(method, *args)
         if method.to_s =~ /(reprocess_to_crop_)(\S{1,})(_attachment)/
           reprocess_cropped_attachment(
@@ -80,7 +80,7 @@ module Papercrop
 
         # Reprocess the attachment after cropping
         def reprocess_cropped_attachment(attachment_name)
-          self.send(attachment_name.to_sym).reprocess! if cropping? attachment_name
+          self.send(attachment_name.to_sym).reprocess! if cropping?(attachment_name)
         end
 
     end

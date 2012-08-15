@@ -38,7 +38,7 @@ On the controller you can render a view after user creation, create a simple cro
       <%= f.submit 'Save' %>
     <% end %>
     
-Both helpers accept a :width option to customize their dimensions. The preview box has width 100 by default but the cropbox is unlimited in size (takes the original image width), so setting the cropbox width is interesting to avoid layout breaking with huge images. 
+Both helpers accept a :width option to customize their dimensions. The preview box has width 100 by default but the cropbox is unlimited in size (takes the original image width), so setting the cropbox width is interesting to avoid layout breaks with huge images. 
 
     <%= form_for @user do |f| %>
       <%= f.cropbox :avatar, :width => 500 %>
@@ -46,6 +46,11 @@ Both helpers accept a :width option to customize their dimensions. The preview b
       <%= f.submit 'Save' %>
     <% end %>
     
-Regardless of the width passed, the preview box and the cropping area will have the aspect ratio defined in the model (1:1 by default)
+Regardless of the width, the preview box and the cropping area will have the aspect ratio defined in the model (1:1 by default)
 
 That's all!
+
+#### Credits and resources
+* [Thoughtbot's Paperclip](https://github.com/thoughtbot/paperclip/)
+* [Deep Liquid's JCrop](http://deepliquid.com/content/Jcrop.html)
+* And Ryan Bates' [Railscast#182](http://railscasts.com/episodes/182-cropping-images/), which has inspired this gem

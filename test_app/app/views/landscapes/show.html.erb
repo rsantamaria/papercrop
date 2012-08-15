@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @landscape.name %>
+</p>
+
+<%= image_tag @landscape.picture(:medium) %>
+
+<br />
+
+<%= link_to 'Edit', edit_landscape_path(@landscape) %> |
+<%= link_to 'Back', landscapes_path %>
