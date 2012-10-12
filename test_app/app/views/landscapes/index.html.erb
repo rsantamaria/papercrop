@@ -15,6 +15,7 @@
     <td><%= landscape.name %></td>
     <td><%= link_to 'Show', landscape %></td>
     <td><%= link_to 'Edit', edit_landscape_path(landscape) %></td>
+    <td><%= link_to 'Crop', crop_landscape_path(landscape), :remote => true, :method => :post %></td>
     <td><%= link_to 'Destroy', landscape, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>

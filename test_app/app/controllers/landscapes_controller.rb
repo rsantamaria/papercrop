@@ -69,6 +69,14 @@ class LandscapesController < ApplicationController
     end
   end
 
+
+  # POST /landscapes/1/crop
+  # POST /landscapes/1/crop.json
+  def crop
+    @landscape = Landscape.find(params[:id])
+  end
+
+
   # DELETE /landscapes/1
   # DELETE /landscapes/1.json
   def destroy

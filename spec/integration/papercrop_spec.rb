@@ -1,11 +1,6 @@
 require "spec_helper"
 
 describe "Image crop" do
-  
-  after do
-    Landscape.destroy_all
-  end
-
 
   it "crops an image" do
     visit landscapes_path
