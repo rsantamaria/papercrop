@@ -59,9 +59,16 @@ module Papercrop
       # @param attachment_name [Symbol] 
       # @param style [Symbol] attachment style, :original by default
       # @return Paperclip::Geometry
+      
+      # def image_geometry(attachment_name, style = :original)
+      #   @geometry        ||= {}
+      #   @geometry[style] ||= Paperclip::Geometry.from_file(self.send(attachment_name).path(style))
+      # end
+
       def image_geometry(attachment_name, style = :original)
-        @geometry        ||= {}
-        @geometry[style] ||= Paperclip::Geometry.from_file(self.send(attachment_name).path(style))
+        @geometry ||= {}
+        path = (self.send(attachment_name).options[:storage]==:s3) ? self.send(attachment_name).url(style) : self.send(attachment_name).path(style)
+        @geometry[style] ||= Paperclip::Geometry.from_file(path)
       end
 
 
