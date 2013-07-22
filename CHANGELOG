@@ -1,3 +1,5 @@
+v0.1.1
+  - Fixed issue with Paperclip 3.5 (attachment_definitions failure)
 
 v0.1.0
   - Upgraded dependencies

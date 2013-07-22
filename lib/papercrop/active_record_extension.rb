@@ -35,8 +35,16 @@ module Papercrop
           opts[:aspect].first.to_f / opts[:aspect].last.to_f
         end
 
-        attachment_definitions[attachment_name][:processors] ||= []
-        attachment_definitions[attachment_name][:processors] << :cropper
+        if respond_to? :attachment_definitions
+          # for Paperclip <= 3.4 
+          definitions = attachment_definitions
+        else
+          # for Paperclip >= 3.5
+          definitions = Paperclip::Tasks::Attachments.instance.definitions_for(self)
+        end
+
+        definitions[attachment_name][:processors] ||= []
+        definitions[attachment_name][:processors] << :cropper
 
         after_update :"reprocess_to_crop_#{attachment_name}_attachment"
       end
