@@ -60,7 +60,13 @@ describe "Active Record Extension" do
 
 
   it "registers the post processor" do
-    @landscape.attachment_definitions[:picture][:processors].should eq([:cropper])
+    definitions = if @landscape.respond_to?(:attachment_definitions)
+      @landscape.attachment_definitions
+    else
+      Paperclip::Tasks::Attachments.instance.definitions_for(Landscape)
+    end
+
+    definitions[:picture][:processors].should eq([:cropper])
   end
 
 
