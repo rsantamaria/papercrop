@@ -1,10 +1,5 @@
 module Papercrop
-  module ActiveRecordExtension
-  
-    def self.included(base)
-      base.extend ClassMethods
-    end
-
+  module ModelExtension
 
     module ClassMethods
 
@@ -116,9 +111,22 @@ module Papercrop
 end
 
 
+# ActiveRecord support
 if defined? ActiveRecord::Base
   ActiveRecord::Base.class_eval do
-    include Papercrop::ActiveRecordExtension
-    include Papercrop::ActiveRecordExtension::InstanceMethods
+    extend  Papercrop::ModelExtension::ClassMethods
+    include Papercrop::ModelExtension::InstanceMethods
+  end
+end
+
+
+# Mongoid support
+if defined? Mongoid::Document 
+  Mongoid::Document::ClassMethods.module_eval do
+    include Papercrop::ModelExtension::ClassMethods
+  end
+
+  Mongoid::Document.module_eval do
+    include Papercrop::ModelExtension::InstanceMethods
   end
 end

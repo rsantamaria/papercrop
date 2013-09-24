@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Active Record Extension" do
+describe "Model Extension" do
 
   before do
     @landscape         = Landscape.new(:name => "Mountains")
