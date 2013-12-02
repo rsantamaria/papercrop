@@ -67,7 +67,7 @@ module Papercrop
       # @return [Paperclip::Geometry]
       def image_geometry(attachment_name, style = :original)
         @geometry ||= {}
-        path = (self.send(attachment_name).options[:storage] == :s3) ? self.send(attachment_name).url(style) : self.send(attachment_name).path(style)
+        path = ([:s3, :fog].include? self.send(attachment_name).options[:storage]) ? self.send(attachment_name).url(style) : self.send(attachment_name).path(style)
         @geometry[style] ||= Paperclip::Geometry.from_file(path)
       end
 
