@@ -29,8 +29,8 @@ describe "Model Extension" do
     @landscape.picture_crop_w = 400
     @landscape.picture_crop_h = 300
     @landscape.save
-
-    compare_images(CROPPED_IMG_PATH, @landscape.picture.path(:medium)).should eq(0.0)
+    # Rounding to account for different versions of imagemagick
+    compare_images(CROPPED_IMG_PATH, @landscape.picture.path(:medium)).round(2).should eq(0.0)
   end
 
 
@@ -60,12 +60,7 @@ describe "Model Extension" do
 
 
   it "registers the post processor" do
-    definitions = if @landscape.respond_to?(:attachment_definitions)
-      @landscape.attachment_definitions
-    else
-      Paperclip::Tasks::Attachments.instance.definitions_for(Landscape)
-    end
-
+    definitions = Paperclip::AttachmentRegistry.definitions_for(Landscape)
     definitions[:picture][:processors].should eq([:cropper])
   end
 

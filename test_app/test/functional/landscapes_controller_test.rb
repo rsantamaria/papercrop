@@ -1,8 +1,10 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 class LandscapesControllerTest < ActionController::TestCase
+
   setup do
     @landscape = landscapes(:one)
+    @landscape.update_attributes(picture: Rack::Test::UploadedFile.new("#{Rails.root}/test/fixtures/matterhorn.jpg", 'image/jpg'))
   end
 
   test "should get index" do
@@ -18,10 +20,10 @@ class LandscapesControllerTest < ActionController::TestCase
 
   test "should create landscape" do
     assert_difference('Landscape.count') do
-      post :create, landscape: { name: @landscape.name }
+      post :create, landscape: { name: @landscape.name, picture: Rack::Test::UploadedFile.new("#{Rails.root}/test/fixtures/matterhorn.jpg", 'image/jpg')}
     end
-
-    assert_redirected_to landscape_path(assigns(:landscape))
+    assert_response :success
+    assert_template :crop
   end
 
   test "should show landscape" do
@@ -35,8 +37,8 @@ class LandscapesControllerTest < ActionController::TestCase
   end
 
   test "should update landscape" do
-    put :update, id: @landscape, landscape: { name: @landscape.name }
-    assert_redirected_to landscape_path(assigns(:landscape))
+    put :update, id: @landscape, landscape: { name: 'Updated Name' }
+    assert_response :redirect
   end
 
   test "should destroy landscape" do
