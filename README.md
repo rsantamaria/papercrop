@@ -50,6 +50,14 @@ Regardless of the width, the preview box and the cropping area will have the asp
 
 If you're rendering it on ajax ensure to call init_papercrop() in js after loading the crop form to make things work properly.  
 
+### Running the Tests
+
+We are using a dummy application to handle some of our test cases. You can find this in the `/test_app` directory and should be able to run this as a regular Rails 4 app _(using the `rails s` command)_ if you're interested in taking a look. You may need to create the mock database for the `test_app` before your tests will start to pass. This means you need to run `rake db:create db:migrate db:test:prepare` from within the `test_app` directory.
+
+In order to fully test our gem, we needed to use [Selenium](http://docs.seleniumhq.org/download/). Getting this setup is beyond the scope of this Readme.
+
+Once you have everything setup, you should be able `bundle exec rake` from the root directory have everything run. If you've installed Selenium properly, you should see an automated instance of your browser _(eg. Firefox)_ pop up and run through some of the integration tests.
+
 That's all!
 
 ### Credits and resources

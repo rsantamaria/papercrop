@@ -19,7 +19,7 @@ describe "Image crop with JS", :js => true do
     click_button "Crop image"
 
     sleep 1
-    compare_images(CROPPED_IMG_PATH, Landscape.last.picture.path(:medium)).should eq(0.0)
+    compare_images(CROPPED_IMG_PATH, Landscape.last.picture.path(:medium)).round(2).should eq(0.0)
   end
 
 
@@ -45,6 +45,6 @@ describe "Image crop with JS", :js => true do
     click_button "Crop image"
 
     sleep 1
-    compare_images(CROPPED_IMG_PATH, Landscape.last.picture.path(:medium)).should eq(0.0)
+    compare_images(CROPPED_IMG_PATH, Landscape.last.picture.path(:medium)).round(2).should eq(0.0)
   end
 end
