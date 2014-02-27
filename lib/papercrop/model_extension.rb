@@ -14,8 +14,9 @@ module Papercrop
       # @param attachment_name [Symbol] Name of the desired attachment to crop
       # @param opts [Hash]
       def crop_attached_file(attachment_name, opts = {})
-        [:crop_x, :crop_y, :crop_w, :crop_h, :original_w, :original_h, :box_w, :aspect, :cropped_geometries].each do |a|
+        [:crop_x, :crop_y, :crop_w, :crop_h, :original_w, :original_h, :box_w, :aspect, :min_size, :max_size, :cropped_geometries].each do |a|
           attr_accessor :"#{attachment_name}_#{a}"
+          attr_accessible :"#{attachment_name}_#{a}"
         end
 
         if opts[:aspect].kind_of?(String) && opts[:aspect] =~ Papercrop::RegExp::ASPECT
@@ -30,8 +31,16 @@ module Papercrop
           opts[:aspect].first.to_f / opts[:aspect].last.to_f
         end
 
+        send :define_method, :"#{attachment_name}_min_size" do
+         opts[:min_size] =~ Papercrop::RegExp::SIZE ? opts[:min_size] : nil
+        end
+
+        send :define_method, :"#{attachment_name}_max_size" do
+         opts[:max_size] =~ Papercrop::RegExp::SIZE ? opts[:max_size] : nil
+        end
+
         if respond_to? :attachment_definitions
-          # for Paperclip <= 3.4 
+          # for Paperclip <= 3.4
           definitions = attachment_definitions
         else
           # for Paperclip >= 3.5
