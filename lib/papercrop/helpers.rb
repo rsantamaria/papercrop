@@ -47,7 +47,7 @@ module Papercrop
         box << self.hidden_field(:"#{attachment}_original_h", :value => original_height)
         box << self.hidden_field(:"#{attachment}_box_w",      :value => box_width)
 
-        for attribute in [:crop_x, :crop_y, :crop_w, :crop_h, :aspect] do
+        for attribute in [:crop_x, :crop_y, :crop_w, :crop_h, :aspect, :min_size, :max_size] do
           box << self.hidden_field(:"#{attachment}_#{attribute}", :id => "#{attachment}_#{attribute}")
         end
 
