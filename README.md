@@ -1,5 +1,6 @@
 ## Improved Papercrop
-This fork adds ability to set minimum and maximum crop size by defining `min_size` and `max_size` respectively in your model. e.g
+### Added Features:
+1. Ability to set minimum and maximum crop size by defining `min_size` and `max_size` respectively in your model. e.g
 
     class User < ActiveRecord::Base
     
@@ -8,8 +9,14 @@ This fork adds ability to set minimum and maximum crop size by defining `min_siz
     
 Generally, you'll be setting min_size to your largest paperclip preset. In our example it is `300x300`. You may want set max_size in similar way.
 
-This fork also sets the initial crop selection size to the maximum width possible, a behaviour seen on Facebook.com.
-    
+2. The initial crop selection size is set to the maximum width possible, a behaviour seen on Facebook.com.The implication of this subtle change is a noticeable improvement in user experience.
+
+3. Now you do not have to set attr_accessible for papercrop parameters in your model. Previously, I had to add:
+
+    attr_accessible :avatar_original_w, :avatar_original_h, :avatar_box_w, :avatar_crop_x, :avatar_crop_y, :avatar_crop_w, :avatar_crop_h, :avatar_aspect
+
+provided that the attachment name is `avatar`.
+
 For full documentation, visit the [original repository](https://github.com/rsantamaria/papercrop).
 ### Installation
 Include this in your gemfile
