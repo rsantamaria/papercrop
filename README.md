@@ -18,6 +18,8 @@
 
    provided that the attachment name is `avatar`.
 
+1. Includes minified resources. Saves an additional ~30kB.
+
 For full documentation, visit the [original repository](https://github.com/rsantamaria/papercrop).
 ### Installation
 Include this in your gemfile
