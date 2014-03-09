@@ -1,4 +1,6 @@
 .rvmrc
+.ruby-version
+.ruby-gemset
 .sass-cache
 *.gem
 *.swp
