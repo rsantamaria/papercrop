@@ -11,6 +11,7 @@ module Papercrop
     # @param attachment [Symbol] attachment name
     # @param opts [Hash]
     def crop_preview(attachment, opts = {})
+      size = opts[:size] || "original"
       attachment = attachment.to_sym
       width      = opts[:width] || 100
       height     = (width / self.object.send(:"#{attachment}_aspect")).round 
@@ -21,7 +22,7 @@ module Papercrop
           :style => "width:#{width}px; height:#{height}px; overflow:hidden"
         }
 
-        preview_image = @template.image_tag(self.object.send(attachment).url, :id => "#{attachment}_crop_preview")
+        preview_image = @template.image_tag(self.object.send(attachment).url(size), :id => "#{attachment}_crop_preview")
 
         @template.content_tag(:div, preview_image, wrapper_options)
       end
@@ -37,9 +38,10 @@ module Papercrop
     # @param attachment [Symbol] attachment name
     # @param opts [Hash]
     def cropbox(attachment, opts = {})
+      size = opts[:size] || "original"
       attachment      = attachment.to_sym
-      original_width  = self.object.image_geometry(attachment, :original).width
-      original_height = self.object.image_geometry(attachment, :original).height
+      original_width  = self.object.image_geometry(attachment, size).width
+      original_height = self.object.image_geometry(attachment, size).height
       box_width       = opts[:width] || original_width
 
       if self.object.send(attachment).class == Paperclip::Attachment
@@ -51,7 +53,7 @@ module Papercrop
           box << self.hidden_field(:"#{attachment}_#{attribute}", :id => "#{attachment}_#{attribute}")
         end
 
-        crop_image = @template.image_tag(self.object.send(attachment).url)
+        crop_image = @template.image_tag(self.object.send(attachment).url(size))
 
         box << @template.content_tag(:div, crop_image, :id => "#{attachment}_cropbox")
       end
