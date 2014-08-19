@@ -1,5 +1,4 @@
 require "paperclip"
-require 'dimensions'
 
 module Paperclip
   class Cropper < Thumbnail
@@ -24,11 +23,20 @@ module Paperclip
         o_w = target.send :"#{@attachment.name}_original_w"
         o_h = target.send :"#{@attachment.name}_original_h"
         
-        case (Dimensions.angle(@attachment.instance.photo.path))
-        when 90
-          tmp = x.to_i
-          x = y
-          y = o_w.to_i - w.to_i - tmp.to_i
+        if @attachment.instance.photo_orientation.present?
+          case (@attachment.instance.photo_orientation)
+          when 3
+            x = o_w.to_i - w.to_i - x.to_i
+            y = o_h.to_i - h.to_i - y.to_i
+          when 6
+            tmp = x.to_i
+            x = y
+            y = o_w.to_i - w.to_i - tmp
+          when 8
+            tmp = x.to_i
+            x = o_h.to_i - h.to_i - y.to_i
+            y = tmp
+          end
         end
         
         ["-crop", "#{w}x#{h}+#{x}+#{y}"]
