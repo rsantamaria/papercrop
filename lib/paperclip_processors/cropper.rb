@@ -16,11 +16,16 @@ module Paperclip
       target = @attachment.instance
 
       if target.cropping?(@attachment.name)
-        w = target.send :"#{@attachment.name}_crop_w"
-        h = target.send :"#{@attachment.name}_crop_h"
-        x = target.send :"#{@attachment.name}_crop_x"
-        y = target.send :"#{@attachment.name}_crop_y"
-        ["-crop", "#{w}x#{h}+#{x}+#{y}"]
+        begin
+          w = Integer(target.send :"#{@attachment.name}_crop_w")
+          h = Integer(target.send :"#{@attachment.name}_crop_h")
+          x = Integer(target.send :"#{@attachment.name}_crop_x")
+          y = Integer(target.send :"#{@attachment.name}_crop_y")
+          ["-crop", "#{w}x#{h}+#{x}+#{y}"]
+        rescue
+          Paperclip.log("[papercrop] #{@attachment.name} crop w/h/x/y were non-integer")
+          return
+        end
       end
     end
 
