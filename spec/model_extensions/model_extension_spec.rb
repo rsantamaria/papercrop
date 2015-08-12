@@ -80,4 +80,12 @@ describe "Model Extension" do
 
     @landscape.image_geometry(:picture)
   end
+
+  it "returns url for fog storage" do
+    @landscape.picture.expects(:url).returns("http://some-aws-s3-fog-storage-url").once
+    @landscape.picture.expects(:options).returns(:storage => :fog).once
+    Paperclip::Geometry.expects(:from_file).with("http://some-aws-s3-fog-storage-url").once
+
+    @landscape.image_geometry(:picture)
+  end
 end
