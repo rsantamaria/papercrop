@@ -2,13 +2,13 @@
 Gem::Specification.new do |s|
   s.name          = 'papercrop'
   s.version       = '0.2.0'
-  s.date          = '2014-02-28'
+  s.date          = '2015-08-11'
   s.summary       = "Paperclip extension for cropping images"
   s.description   = "An easy extension for Paperclip to crop your image uploads using jCrop"
   s.license       = 'MIT'
-  s.authors       = ["Ruben Santamaria"]
-  s.email         = 'rsantamaria.dev@gmail.com'
-  s.homepage      = 'https://github.com/rsantamaria/papercrop'
+  s.authors       = ["Ajit D'Sa"]
+  s.email         = 'ajitdsa@gmail.com'
+  s.homepage      = 'https://github.com/ajitdsa/papercrop'
 
   s.files         = Dir.glob("{lib,vendor}/**/*") + %w(README.md)
   s.test_files    = Dir.glob("{spec}/**/*")
