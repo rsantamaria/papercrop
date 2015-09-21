@@ -52,11 +52,16 @@ If you're rendering it on ajax ensure to call init_papercrop() in js after loadi
 
 ### Running the Tests
 
-We are using a dummy application to handle some of our test cases. You can find this in the `/test_app` directory and should be able to run this as a regular Rails 4 app _(using the `rails s` command)_ if you're interested in taking a look. You may need to create the mock database for the `test_app` before your tests will start to pass. This means you need to run `rake db:create db:migrate db:test:prepare` from within the `test_app` directory.
+We are using dummy applications to handle some of our test cases with different Gemfiles using [Appraisal](https://github.com/thoughtbot/appraisal). You can find them in the `/test_apps` directory and should be able to run them as a regular Rails app _(using the `rails s` command)_ if you're interested in taking a look. You may need to create mock databases for the `test_apps` before your tests will start to pass. This means you need to run the classics `rake db:create db:migrate db:test:prepare` through appraisal from the root directory.
+
+    appraisal rails_3_2 rake db:create db:migrate
+    appraisal rails_4 rake db:create db:migrate
+
+Append RAILS_ENV=test to both commands to prepare each database for testing
 
 In order to fully test our gem, we needed to use [Selenium](http://docs.seleniumhq.org/download/). Getting this setup is beyond the scope of this Readme.
 
-Once you have everything setup, you should be able `bundle exec rake` from the root directory have everything run. If you've installed Selenium properly, you should see an automated instance of your browser _(eg. Firefox)_ pop up and run through some of the integration tests.
+Once you have everything setup, you should be able `appraisal rake` from the root directory have everything run. If you've installed Selenium properly, you should see an automated instance of your browser _(eg. Firefox)_ pop up and run through some of the integration tests.
 
 That's all!
 

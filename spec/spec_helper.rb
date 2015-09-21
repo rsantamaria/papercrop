@@ -1,6 +1,8 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] = 'test'
-require File.expand_path("../../test_apps/rails_3_2/config/environment", __FILE__)
+ENV["TEST_APP"]  ||= 'rails_4'
+
+require File.expand_path("../../test_apps/#{ENV["TEST_APP"]}/config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'database_cleaner'

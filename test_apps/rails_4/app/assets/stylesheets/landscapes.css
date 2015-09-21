@@ -1,0 +1,14 @@
+.landscape-crop-preview {
+  float         : left;
+  margin-right  : 20px;
+  margin-bottom : 20px;
+}
+
+.landscape-crop-area {
+  float         : left;
+  margin-bottom : 20px;
+}
+
+.clear {
+  clear : both;
+}
