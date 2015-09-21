@@ -4,7 +4,7 @@ describe "Model Extension" do
 
   before do
     @landscape         = Landscape.new(:name => "Mountains")
-    @landscape.picture = open("test_app/test/fixtures/matterhorn.jpg")
+    @landscape.picture = open(mountains_img_path)
     @landscape.save
   end
 
@@ -30,7 +30,7 @@ describe "Model Extension" do
     @landscape.picture_crop_h = 300
     @landscape.save
     # Rounding to account for different versions of imagemagick
-    compare_images(CROPPED_IMG_PATH, @landscape.picture.path(:medium)).round(2).should eq(0.0)
+    compare_images(expected_mountains_img_path, @landscape.picture.path(:medium)).round(2).should eq(0.0)
   end
 
 
@@ -80,6 +80,7 @@ describe "Model Extension" do
 
     @landscape.image_geometry(:picture)
   end
+
 
   it "returns url for fog storage" do
     @landscape.picture.expects(:url).returns("http://some-aws-s3-fog-storage-url").once

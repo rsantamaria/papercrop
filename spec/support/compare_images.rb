@@ -6,3 +6,13 @@ def compare_images(test_image_path, cropped_image_path)
   
   test_img.compare_channel(target_img, Magick::MeanAbsoluteErrorMetric).second
 end
+
+
+def mountains_img_path
+  "spec/fixtures/mountains.jpg"
+end
+
+
+def expected_mountains_img_path
+  "spec/fixtures/mountains_expected_result.jpg"
+end

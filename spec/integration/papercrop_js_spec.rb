@@ -8,7 +8,7 @@ describe "Image crop with JS", :js => true do
     click_link "New Landscape"
 
     fill_in "Name", :with => "Mountains"
-    find("#landscape_picture").native.send_keys(File.expand_path("../../../test_app/test/fixtures/matterhorn.jpg", __FILE__))
+    find("#landscape_picture").native.send_keys(File.expand_path("../../../#{mountains_img_path}", __FILE__))
     click_button "Create Landscape"
 
     sleep 2
@@ -19,7 +19,7 @@ describe "Image crop with JS", :js => true do
     click_button "Crop image"
 
     sleep 1
-    compare_images(CROPPED_IMG_PATH, Landscape.last.picture.path(:medium)).round(2).should eq(0.0)
+    compare_images(expected_mountains_img_path, Landscape.last.picture.path(:medium)).round(2).should eq(0.0)
   end
 
 
@@ -29,7 +29,7 @@ describe "Image crop with JS", :js => true do
     click_link "New Landscape"
 
     fill_in "Name", :with => "Mountains"
-    find("#landscape_picture").native.send_keys(File.expand_path("../../../test_app/test/fixtures/matterhorn.jpg", __FILE__))
+    find("#landscape_picture").native.send_keys(File.expand_path(File.expand_path("../../../#{mountains_img_path}", __FILE__), __FILE__))
     click_button "Create Landscape"
 
     click_button "Crop image"
@@ -45,6 +45,6 @@ describe "Image crop with JS", :js => true do
     click_button "Crop image"
 
     sleep 1
-    compare_images(CROPPED_IMG_PATH, Landscape.last.picture.path(:medium)).round(2).should eq(0.0)
+    compare_images(expected_mountains_img_path, Landscape.last.picture.path(:medium)).round(2).should eq(0.0)
   end
 end

@@ -4,7 +4,7 @@ describe "Form Helpers" do
 
   before do
     @landscape         = Landscape.new(:name => "Mountains")
-    @landscape.picture = open("test_app/test/fixtures/matterhorn.jpg")
+    @landscape.picture = open(mountains_img_path)
     @landscape.save
 
     @box = nil

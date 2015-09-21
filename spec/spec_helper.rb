@@ -1,6 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] = 'test'
-require File.expand_path("../../test_app/config/environment", __FILE__)
+require File.expand_path("../../test_apps/rails_3_2/config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'database_cleaner'
@@ -8,9 +8,6 @@ require 'database_cleaner'
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
-
-# Previously cropped image. Used for comparing test cropped images with RMagick
-CROPPED_IMG_PATH = "test_app/test/fixtures/test_img.jpg"
 
 RSpec.configure do |config|
   # ## Mock Framework

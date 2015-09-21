@@ -6,9 +6,9 @@
 *.swp
 **/*.swp
 Gemfile.lock
-test_app/.bundle
-test_app/Gemfile.lock
-test_app/db/*.sqlite3
-test_app/log/*.log
-test_app/tmp
-test_app/public/assets
+test_apps/rails_3_2/.bundle
+test_apps/rails_3_2/Gemfile.lock
+test_apps/rails_3_2/db/*.sqlite3
+test_apps/rails_3_2/log/*.log
+test_apps/rails_3_2/tmp
+test_apps/rails_3_2/public/assets

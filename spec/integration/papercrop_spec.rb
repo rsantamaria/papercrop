@@ -8,7 +8,7 @@ describe "Image crop" do
     click_link "New Landscape"
 
     fill_in      "Name", :with => "Mountains"
-    attach_file  "Picture", "test_app/test/fixtures/matterhorn.jpg"
+    attach_file  "Picture", mountains_img_path
     click_button "Create Landscape"
 
     page.should have_css("#picture_crop_preview_wrapper")
@@ -29,6 +29,6 @@ describe "Image crop" do
 
     click_button "Crop image"
     
-    compare_images(CROPPED_IMG_PATH, Landscape.last.picture.path(:medium)).round(2).should eq(0.0)
+    compare_images(expected_mountains_img_path, Landscape.last.picture.path(:medium)).round(2).should eq(0.0)
   end
 end
