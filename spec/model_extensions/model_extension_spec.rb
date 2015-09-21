@@ -10,8 +10,8 @@ describe "Model Extension" do
 
 
   it "clears the crop attributes" do
-    @landscape.picture_crop_x = 0.0
-    @landscape.picture_crop_y = 0.0
+    @landscape.picture_crop_x = 0
+    @landscape.picture_crop_y = 0
     @landscape.picture_crop_w = 400
     @landscape.picture_crop_h = 300
     @landscape.reset_crop_attributes_of(:picture)
@@ -24,8 +24,8 @@ describe "Model Extension" do
 
 
   it "crops images" do
-    @landscape.picture_crop_x = 300.0
-    @landscape.picture_crop_y = 200.0
+    @landscape.picture_crop_x = 300
+    @landscape.picture_crop_y = 200
     @landscape.picture_crop_w = 400
     @landscape.picture_crop_h = 300
     @landscape.save
@@ -51,8 +51,8 @@ describe "Model Extension" do
   
   it "knows when to crop" do
     @landscape.cropping?(:picture).should be(false)
-    @landscape.picture_crop_x = 0.0
-    @landscape.picture_crop_y = 0.0
+    @landscape.picture_crop_x = 0
+    @landscape.picture_crop_y = 0
     @landscape.picture_crop_w = 400
     @landscape.picture_crop_h = 300
     @landscape.cropping?(:picture).should be(true)
@@ -73,8 +73,19 @@ describe "Model Extension" do
   it "returns image properties" do
     @landscape.picture_aspect.should eq(4.0 / 3.0)
 
-    @landscape.image_geometry(:picture).width.should  eq(1024.0)
-    @landscape.image_geometry(:picture).height.should eq(768.0)
+    @landscape.image_geometry(:picture).width.should  eq(1024)
+    @landscape.image_geometry(:picture).height.should eq(768)
+  end
+
+
+  it "sanitizes processor" do  
+    Papercrop.expects(:log).with('[papercrop] picture crop w/h/x/y were non-integer. Error: invalid value for Integer(): "evil code"').twice
+  
+    @landscape.picture_crop_x = "evil code"
+    @landscape.picture_crop_y = 200
+    @landscape.picture_crop_w = 400
+    @landscape.picture_crop_h = 300
+    @landscape.save
   end
 
 

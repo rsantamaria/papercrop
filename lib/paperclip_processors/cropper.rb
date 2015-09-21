@@ -22,9 +22,9 @@ module Paperclip
           x = Integer(target.send :"#{@attachment.name}_crop_x")
           y = Integer(target.send :"#{@attachment.name}_crop_y")
           ["-crop", "#{w}x#{h}+#{x}+#{y}"]
-        rescue
-          Paperclip.log("[papercrop] #{@attachment.name} crop w/h/x/y were non-integer")
-          return
+        rescue Exception => e
+          Papercrop.log("[papercrop] #{@attachment.name} crop w/h/x/y were non-integer. Error: #{e.to_s}")
+          return 
         end
       end
     end

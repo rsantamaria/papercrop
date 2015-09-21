@@ -17,13 +17,13 @@ describe "Image crop" do
 
     page.should have_css("#landscape_picture_original_w")
 
-    find("#landscape_picture_original_w").value.should eq("1024.0")
-    find("#landscape_picture_original_h").value.should eq("768.0")
+    find("#landscape_picture_original_w").value.should eq("1024")
+    find("#landscape_picture_original_h").value.should eq("768")
     find("#landscape_picture_box_w").value.should      eq("600")
     find("#picture_aspect").value.should               eq((4.0 / 3.0).to_s)
 
-    find("#picture_crop_x").set "300.0"
-    find("#picture_crop_y").set "200.0"
+    find("#picture_crop_x").set "300"
+    find("#picture_crop_y").set "200"
     find("#picture_crop_w").set "400"
     find("#picture_crop_h").set "300"
 
