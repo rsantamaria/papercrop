@@ -66,7 +66,7 @@ describe "Model Extension" do
       Paperclip::AttachmentRegistry.definitions_for(Landscape)
     end
 
-    definitions[:picture][:processors].should eq([:cropper])
+    definitions[:picture][:processors].should eq([:papercrop])
   end
 
 

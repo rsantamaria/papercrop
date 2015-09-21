@@ -1,7 +1,7 @@
 require "paperclip"
 
 module Paperclip
-  class Cropper < Thumbnail
+  class Papercrop < Thumbnail
 
     def transformation_command
       if crop_command
@@ -23,7 +23,7 @@ module Paperclip
           y = Integer(target.send :"#{@attachment.name}_crop_y")
           ["-crop", "#{w}x#{h}+#{x}+#{y}"]
         rescue Exception => e
-          Papercrop.log("[papercrop] #{@attachment.name} crop w/h/x/y were non-integer. Error: #{e.to_s}")
+          ::Papercrop.log("[papercrop] #{@attachment.name} crop w/h/x/y were non-integer. Error: #{e.to_s}")
           return 
         end
       end
