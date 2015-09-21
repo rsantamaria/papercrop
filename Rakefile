@@ -1,4 +1,6 @@
 require 'bundler'
+require 'appraisal'
+
 Bundler::GemHelper.install_tasks
 
 require 'rspec/core'

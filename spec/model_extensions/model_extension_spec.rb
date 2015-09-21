@@ -60,7 +60,12 @@ describe "Model Extension" do
 
 
   it "registers the post processor" do
-    definitions = Paperclip::AttachmentRegistry.definitions_for(Landscape)
+    definitions = if Landscape.respond_to?(:attachment_definitions)
+      Landscape.attachment_definitions
+    else
+      Paperclip::AttachmentRegistry.definitions_for(Landscape)
+    end
+
     definitions[:picture][:processors].should eq([:cropper])
   end
 

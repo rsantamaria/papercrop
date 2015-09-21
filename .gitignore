@@ -6,6 +6,7 @@
 *.swp
 **/*.swp
 Gemfile.lock
+gemfiles/rails_3_2.gemfile.lock
 test_apps/rails_3_2/.bundle
 test_apps/rails_3_2/Gemfile.lock
 test_apps/rails_3_2/db/*.sqlite3

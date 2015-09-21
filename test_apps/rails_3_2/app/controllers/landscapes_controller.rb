@@ -45,7 +45,7 @@ class LandscapesController < ApplicationController
   # POST /landscapes
   # POST /landscapes.json
   def create
-    @landscape = Landscape.new(landscape_params)
+    @landscape = Landscape.new(params[:landscape])
 
     respond_to do |format|
       if @landscape.save
@@ -65,7 +65,7 @@ class LandscapesController < ApplicationController
     @landscape = Landscape.find(params[:id])
 
     respond_to do |format|
-      if @landscape.update_attributes(landscape_params)
+      if @landscape.update_attributes(params[:landscape])
         format.html { redirect_to @landscape, notice: 'Landscape was successfully updated.' }
         format.json { head :no_content }
       else
@@ -93,12 +93,6 @@ class LandscapesController < ApplicationController
       format.html { redirect_to landscapes_url }
       format.json { head :no_content }
     end
-  end
-
-private
-
-  def landscape_params
-    params.fetch(:landscape, {}).permit!
   end
 
 end
