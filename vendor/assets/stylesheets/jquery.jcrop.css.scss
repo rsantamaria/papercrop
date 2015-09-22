@@ -15,7 +15,7 @@
 }
 
 /* These styles define the border lines */
-.jcrop-vline,.jcrop-hline{background:#FFF url(Jcrop.gif) top left repeat;font-size:0;position:absolute;}
+.jcrop-vline,.jcrop-hline{background:#FFF asset_data_url("Jcrop.gif") top left repeat;font-size:0;position:absolute;}
 .jcrop-vline{height:100%;width:1px!important;}
 .jcrop-hline{height:1px!important;width:100%;}
 .jcrop-vline.right{right:0;}
@@ -27,7 +27,7 @@
 /* This style is used for invisible click targets */
 .jcrop-tracker
 {
-  height: 100%; 
+  height: 100%;
   width: 100%;
   -webkit-tap-highlight-color: transparent; /* "turn off" link highlight */
   -webkit-touch-callout: none;              /* disable callout, image save panel */
