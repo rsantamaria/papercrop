@@ -1,10 +1,10 @@
 module Papercrop
   module Helpers
-    
+
     # Form helper to render the cropping preview box of an attachment.
-    # Box width can be handled by setting the :width option. 
+    # Box width can be handled by setting the :width option.
     # Width is 100 by default. Height is calculated by the aspect ratio.
-    # 
+    #
     #   crop_preview :avatar
     #   crop_preview :avatar, :width => 150
     #
@@ -13,7 +13,7 @@ module Papercrop
     def crop_preview(attachment, opts = {})
       attachment = attachment.to_sym
       width      = opts[:width] || 100
-      height     = (width / self.object.send(:"#{attachment}_aspect")).round 
+      height     = (width / self.object.send(:"#{attachment}_aspect")).round
 
       if self.object.send(attachment).class == Paperclip::Attachment
         wrapper_options = {
@@ -34,6 +34,9 @@ module Papercrop
     #
     #   cropbox :avatar, :width => 650
     #
+    # You can unlock the aspect ratio used by Jcrop by setting :aspect_lock to false
+    #   cropbox :avatar, :width => 650, :aspect_lock => false
+    #
     # @param attachment [Symbol] attachment name
     # @param opts [Hash]
     def cropbox(attachment, opts = {})
@@ -41,15 +44,17 @@ module Papercrop
       original_width  = self.object.image_geometry(attachment, :original).width.to_i
       original_height = self.object.image_geometry(attachment, :original).height.to_i
       box_width       = opts[:width] || original_width
+      aspect_lock     = opts[:aspect_lock] ||= "true"
 
       if self.object.send(attachment).class == Paperclip::Attachment
         box  = self.hidden_field(:"#{attachment}_original_w", :value => original_width)
         box << self.hidden_field(:"#{attachment}_original_h", :value => original_height)
         box << self.hidden_field(:"#{attachment}_box_w",      :value => box_width)
 
-        for attribute in [:crop_x, :crop_y, :crop_w, :crop_h, :aspect] do
+        for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] do
           box << self.hidden_field(:"#{attachment}_#{attribute}", :id => "#{attachment}_#{attribute}")
         end
+        box << self.hidden_field(:"#{attachment}_aspect", :id => "#{attachment}_aspect", :'data-lock' => aspect_lock)
 
         crop_image = @template.image_tag(self.object.send(attachment).url)
 

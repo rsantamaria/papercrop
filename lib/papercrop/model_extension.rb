@@ -7,7 +7,7 @@ module Papercrop
       #
       #   crop_attached_file :avatar
       #
-      # You can also define an aspect ratio for the crop and preview box through opts[:aspect]
+      # You can also define an initial aspect ratio for the crop and preview box through opts[:aspect]
       #
       #   crop_attached_file :avatar, :aspect => "4:3"
       #
@@ -31,7 +31,7 @@ module Papercrop
         end
 
         if respond_to? :attachment_definitions
-          # for Paperclip <= 3.4 
+          # for Paperclip <= 3.4
           definitions = attachment_definitions
         else
           # for Paperclip >= 3.5
@@ -50,7 +50,7 @@ module Papercrop
 
       # Asks if the attachment received a crop process
       # @param  attachment_name [Symbol]
-      # 
+      #
       # @return [Boolean]
       def cropping?(attachment_name)
         !self.send(:"#{attachment_name}_crop_x").blank? &&
@@ -124,7 +124,7 @@ end
 
 
 # Mongoid support
-if defined? Mongoid::Document 
+if defined? Mongoid::Document
   Mongoid::Document::ClassMethods.module_eval do
     include Papercrop::ModelExtension::ClassMethods
   end
