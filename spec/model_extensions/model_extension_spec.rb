@@ -6,6 +6,11 @@ describe "Model Extension" do
     @landscape         = Landscape.new(:name => "Mountains")
     @landscape.picture = open(mountains_img_path)
     @landscape.save
+
+    @user = User.new(:name => "Bert", :email => "bert@sesame.street")
+    @user.avatar    = open(bert_img_path)
+    @user.signature = open(mountains_img_path)
+    @user.save
   end
 
 
@@ -75,6 +80,18 @@ describe "Model Extension" do
 
     @landscape.image_geometry(:picture).width.should  eq(1024)
     @landscape.image_geometry(:picture).height.should eq(768)
+  end
+
+
+  it "returns image geometry for two attachments" do
+    @user.image_geometry(:avatar).width.should              eq(900)
+    @user.image_geometry(:avatar).height.should             eq(900)
+    @user.image_geometry(:avatar, :medium).width.should     eq(200)
+    @user.image_geometry(:avatar, :medium).height.should    eq(200)
+    @user.image_geometry(:signature).width.should           eq(1024)
+    @user.image_geometry(:signature).height.should          eq(768)
+    @user.image_geometry(:signature, :medium).width.should  eq(496)
+    @user.image_geometry(:signature, :medium).height.should eq(279)
   end
 
 

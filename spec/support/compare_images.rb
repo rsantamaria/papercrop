@@ -16,3 +16,8 @@ end
 def expected_mountains_img_path
   "spec/fixtures/mountains_expected_result.jpg"
 end
+
+
+def bert_img_path
+  "spec/fixtures/bert.jpg"
+end
