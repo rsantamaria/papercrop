@@ -17,10 +17,10 @@ describe "Form Helpers" do
     end
     @box = HTML::Document.new(@box)
 
-    assert_select @box.root, 'input#landscape_picture_original_w', :value => "1024.0"
-    assert_select @box.root, 'input#landscape_picture_original_h', :value => "768.0"
-    assert_select @box.root, 'input#landscape_picture_box_w',      :value => "1024.0"
-    assert_select @box.root, 'input#picture_aspect',               :value => @landscape.picture_aspect.to_s
+    assert_select @box.root, 'input#landscape_picture_original_w[value="1024"]'
+    assert_select @box.root, 'input#landscape_picture_original_h[value="768"]'
+    assert_select @box.root, 'input#landscape_picture_box_w[value="1024"]'
+    assert_select @box.root, "input#picture_aspect[value=\"#{@landscape.picture_aspect.to_s}\"]"
     assert_select @box.root, 'input#picture_crop_x'
     assert_select @box.root, 'input#picture_crop_y'
     assert_select @box.root, 'input#picture_crop_w'
@@ -38,7 +38,7 @@ describe "Form Helpers" do
     end
     @box = HTML::Document.new(@box)
 
-    assert_select @box.root, 'input#landscape_picture_box_w', :value => "400"
+    assert_select @box.root, 'input#landscape_picture_box_w[value="400"]'
   end
 
 
@@ -58,8 +58,8 @@ describe "Form Helpers" do
     end
     @box = HTML::Document.new(@box)
 
-    assert_select @box.root, 'div#picture_crop_preview_wrapper', :style => "width:100px; height:75px; overflow:hidden" do
-      assert_select 'img#picture_crop_preview', :src => @landscape.picture.path(:original)
+    assert_select @box.root, 'div#picture_crop_preview_wrapper[style="width:100px; height:75px; overflow:hidden"]' do
+      assert_select "img#picture_crop_preview[src=\"#{@landscape.picture.url(:original)}\"]"
     end
   end
 
@@ -70,6 +70,6 @@ describe "Form Helpers" do
     end
     @box = HTML::Document.new(@box)
 
-    assert_select @box.root, 'div#picture_crop_preview_wrapper', :style => "width:40px; height:30px; overflow:hidden"
+    assert_select @box.root, 'div#picture_crop_preview_wrapper[style="width:40px; height:30px; overflow:hidden"]'
   end
 end
