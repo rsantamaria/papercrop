@@ -1,8 +1,8 @@
 
 Gem::Specification.new do |s|
   s.name          = 'papercrop'
-  s.version       = '0.2.0'
-  s.date          = '2014-02-28'
+  s.version       = '0.3.0'
+  s.date          = '2015-09-23'
   s.summary       = "Paperclip extension for cropping images"
   s.description   = "An easy extension for Paperclip to crop your image uploads using jCrop"
   s.license       = 'MIT'
@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email         = 'rsantamaria.dev@gmail.com'
   s.homepage      = 'https://github.com/rsantamaria/papercrop'
 
-  s.files         = Dir.glob("{lib,vendor}/**/*") + %w(README.md)
+  s.files         = Dir.glob("{lib,vendor}/**/*") + %w(README.md Appraisals)
   s.test_files    = Dir.glob("{spec}/**/*")
   s.require_paths = ["lib"]
 
