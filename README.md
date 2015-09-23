@@ -52,13 +52,22 @@ If you're rendering it on ajax ensure to call init_papercrop() in js after loadi
 
 ### Advanced features
 
-You can unlock the aspect ratio if you pass false as argument. NOTE: preview will be disabled
-    
+**Unlock aspect ratio**
+
+You can unlock the aspect ratio if you pass false as argument. NOTE: *preview will be disabled*
+
     crop_attached_file :snapshot, :aspect => false
 
 Regardless the model, you can always redefine/unlock aspect from the helper if you need to.
 
     f.cropbox :snapshot, :width => 500, :aspect => 4..3
+
+**Chaining processors**
+
+Maybe you want to chain some custom processors to do amazing effects like crop and then rotate the image. Papercrop will add its processor in last place unless you declare it in the attachment definition
+
+    has_attached_file :landscape, :styles => {:big => '2000x1500'}, 
+                                  :processors => [:papercrop, :rotator]
 
 ### Running the Tests
 

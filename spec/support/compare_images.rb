@@ -8,6 +8,15 @@ def compare_images(test_image_path, cropped_image_path)
 end
 
 
+def retrieve_attachment_definitions_for(model_class)
+  if model_class.respond_to?(:attachment_definitions)
+    model_class.attachment_definitions
+  else
+    Paperclip::AttachmentRegistry.definitions_for(model_class)
+  end
+end
+
+
 def mountains_img_path
   "spec/fixtures/mountains.jpg"
 end

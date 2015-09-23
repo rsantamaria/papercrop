@@ -77,13 +77,19 @@ describe "Model Extension" do
 
 
   it "registers the post processor" do
-    definitions = if Landscape.respond_to?(:attachment_definitions)
-      Landscape.attachment_definitions
-    else
-      Paperclip::AttachmentRegistry.definitions_for(Landscape)
-    end
+    definitions = retrieve_attachment_definitions_for(Landscape)
 
     definitions[:picture][:processors].should eq([:papercrop])
+  end
+
+
+  it "does not register the processor if it's already there" do
+    Landscape.has_attached_file :processed, :styles => {:medium => "200x200#"}, :processors => [:papercrop, :rotator]
+    Landscape.crop_attached_file :processed
+
+    definitions = retrieve_attachment_definitions_for(Landscape)
+
+    definitions[:processed][:processors].should eq([:papercrop, :rotator])
   end
 
 
