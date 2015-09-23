@@ -10,24 +10,25 @@ module Papercrop
       # You can also define an initial aspect ratio for the crop and preview box through opts[:aspect]
       #
       #   crop_attached_file :avatar, :aspect => "4:3"
+      # 
+      # Or unlock it
+      # 
+      #   crop_attached_file :avatar, :aspect => false
       #
       # @param attachment_name [Symbol] Name of the desired attachment to crop
       # @param opts [Hash]
+      # @option opts [Range, String, FlaseClass] :aspect
       def crop_attached_file(attachment_name, opts = {})
+        opts = opts.dup
+
         [:crop_x, :crop_y, :crop_w, :crop_h, :original_w, :original_h, :box_w, :aspect, :cropped_geometries].each do |a|
           attr_accessor :"#{attachment_name}_#{a}"
         end
 
-        if opts[:aspect].kind_of?(String) && opts[:aspect] =~ Papercrop::RegExp::ASPECT
-          opts[:aspect] = Range.new *opts[:aspect].split(':').map(&:to_i)
-        end
-
-        unless opts[:aspect].kind_of?(Range)
-          opts[:aspect] = 1..1
-        end
+        aspect = normalize_aspect opts[:aspect]
 
         send :define_method, :"#{attachment_name}_aspect" do
-          opts[:aspect].first.to_f / opts[:aspect].last.to_f
+          aspect.first.to_f / aspect.last.to_f if aspect
         end
 
         if respond_to? :attachment_definitions
@@ -42,6 +43,24 @@ module Papercrop
         definitions[attachment_name][:processors] << :papercrop
 
         after_update :"reprocess_to_crop_#{attachment_name}_attachment"
+      end
+
+
+      # Returns a valid and normalized value for aspect ratio
+      # It will return 1.. if aspect is nil or a invalid string
+      # @param aspect [Range, String, FalseClass]
+      # 
+      # @return [Range]
+      def normalize_aspect(aspect)
+        if aspect.kind_of?(String) && aspect =~ Papercrop::RegExp::ASPECT
+          Range.new *aspect.split(':').map(&:to_i)
+        elsif aspect.kind_of?(Range)
+          return aspect.first.to_i..aspect.last.to_i
+        elsif aspect == false
+          return aspect
+        else
+          1..1
+        end
       end
     end
 

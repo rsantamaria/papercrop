@@ -41,14 +41,16 @@ describe "Form Helpers" do
     assert_select @box.root, 'input#landscape_picture_box_w', :value => "400"
   end
 
+
   it "builds the crop box with unlocked aspect flag" do
     form_for @landscape do |f|
-      @box = f.cropbox(:picture, :width => 400, :aspect_lock => false)
+      @box = f.cropbox(:picture, :width => 400, :aspect => false)
     end
     @box = HTML::Document.new(@box)
 
-    assert_select @box.root, 'input#landscape_picture_box_aspect', :'data-lock' => "false"
+    assert_select @box.root, 'input#picture_aspect[value="false"]'
   end
+
 
   it "builds the preview box" do
     form_for @landscape do |f|

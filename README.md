@@ -50,6 +50,16 @@ Regardless of the width, the preview box and the cropping area will have the asp
 
 If you're rendering it on ajax ensure to call init_papercrop() in js after loading the crop form to make things work properly.  
 
+### Advanced features
+
+You can unlock the aspect ratio if you pass false as argument. NOTE: preview will be disabled
+    
+    crop_attached_file :snapshot, :aspect => false
+
+Regardless the model, you can always redefine/unlock aspect from the helper if you need to.
+
+    f.cropbox :snapshot, :width => 500, :aspect => 4..3
+
 ### Running the Tests
 
 We are using dummy applications to handle some of our test cases with different Gemfiles using [Appraisal](https://github.com/thoughtbot/appraisal). You can find them in the `/test_apps` directory and should be able to run them as a regular Rails app _(using the `rails s` command)_ if you're interested in taking a look. You may need to create mock databases for the `test_apps` before your tests will start to pass. This means you need to run the classics `rake db:create db:migrate db:test:prepare` through appraisal from the root directory.

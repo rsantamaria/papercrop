@@ -64,6 +64,18 @@ describe "Model Extension" do
   end
 
 
+  it "normalizes aspect ratio" do 
+    Landscape.normalize_aspect(4..3).should     eq(4..3)
+    Landscape.normalize_aspect("4:3").should    eq(4..3)
+    Landscape.normalize_aspect("4".."3").should eq(4..3)
+    Landscape.normalize_aspect(4.0..3.0).should eq(4..3)
+    Landscape.normalize_aspect(false).should    eq(false)
+    Landscape.normalize_aspect(nil).should      eq(1..1)
+    Landscape.normalize_aspect(true).should     eq(1..1)
+    Landscape.normalize_aspect("foo").should    eq(1..1)
+  end
+
+
   it "registers the post processor" do
     definitions = if Landscape.respond_to?(:attachment_definitions)
       Landscape.attachment_definitions
