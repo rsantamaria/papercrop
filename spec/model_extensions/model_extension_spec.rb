@@ -90,6 +90,8 @@ describe "Model Extension" do
     definitions = retrieve_attachment_definitions_for(Landscape)
 
     definitions[:processed][:processors].should eq([:papercrop, :rotator])
+
+    Landscape._update_callbacks.delete_if {|e| e.instance_values['filter'] == :reprocess_to_crop_processed_attachment } 
   end
 
 
