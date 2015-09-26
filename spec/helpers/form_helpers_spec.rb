@@ -60,6 +60,7 @@ describe "Form Helpers" do
 
     assert_select @box.root, 'div#picture_crop_preview_wrapper[style="width:100px; height:75px; overflow:hidden"]' do
       assert_select "img#picture_crop_preview[src=\"#{@landscape.picture.url(:original)}\"]"
+      assert_select "img#picture_crop_preview[style=\"max-width:none; max-height:none\"]"
     end
   end
 

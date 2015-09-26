@@ -21,7 +21,12 @@ module Papercrop
           :style => "width:#{width}px; height:#{height}px; overflow:hidden"
         }
 
-        preview_image = @template.image_tag(self.object.send(attachment).url, :id => "#{attachment}_crop_preview")
+        image_options = {
+          :id    => "#{attachment}_crop_preview",
+          :style => "max-width:none; max-height:none"
+        }
+
+        preview_image = @template.image_tag(self.object.send(attachment).url, image_options)
 
         @template.content_tag(:div, preview_image, wrapper_options)
       end
