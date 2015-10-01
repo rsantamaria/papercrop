@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.0.2'
+gem 'shared_rails', :path => "../shared_rails"
 gem 'sqlite3'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
@@ -13,9 +14,3 @@ group :assets do
   gem 'coffee-rails', '~> 4.0.0'
   gem 'therubyracer', platforms: :ruby
 end
-
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
-

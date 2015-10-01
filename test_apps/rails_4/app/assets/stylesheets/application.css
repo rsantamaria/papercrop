@@ -11,4 +11,5 @@
  *= require_self
  *= require jquery.jcrop
  *= require_tree .
+ *= require landscapes
  */

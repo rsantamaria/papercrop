@@ -1,0 +1,30 @@
+<h1>Listing landscapes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Picture</th>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @landscapes.each do |landscape| %>
+      <tr>
+        <td><%= image_tag landscape.picture(:thumb) %></td>
+        <td><%= landscape.name %></td>
+        <td><%= link_to 'Show', landscape %></td>
+        <td><%= link_to 'Edit', edit_landscape_path(landscape) %></td>
+        <td><%= link_to 'Crop', crop_landscape_path(landscape), :remote => true, :method => :post %></td>
+        <td><%= link_to 'Destroy', landscape, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Landscape', new_landscape_path %>
