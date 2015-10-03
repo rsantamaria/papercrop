@@ -50,6 +50,20 @@ Regardless of the width, the preview box and the cropping area will have the asp
 
 If you're rendering it on ajax ensure to call init_papercrop() in js after loading the crop form to make things work properly.  
 
+To allow rails to save changes in your controller, you need to permit the fields papercrop uses. For example, if your model with the attached image is named user and the attachment is named avatar:
+
+```ruby
+params.require(:user).permit(:avatar, 
+   :avatar_original_w, 
+   :avatar_original_h, 
+   :avatar_box_w, 
+   :avatar_aspect, 
+   :avatar_crop_x, 
+   :avatar_crop_y, 
+   :avatar_crop_w, 
+   :avatar_crop_h)
+```
+
 ### Advanced features
 
 **Unlock aspect ratio**
