@@ -39,11 +39,6 @@ module Papercrop
           definitions = Paperclip::Tasks::Attachments.instance.definitions_for(self)
         end
 
-        processors = definitions[attachment_name][:processors] ||= []
-        unless processors.include? :papercrop
-          processors << :papercrop
-        end
-
         after_update :"reprocess_to_crop_#{attachment_name}_attachment"
       end
 
