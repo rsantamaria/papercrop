@@ -78,9 +78,9 @@ We are using dummy applications to handle some of our test cases with different 
 
 Append RAILS_ENV=test to both commands to prepare each database for testing
 
-In order to fully test our gem, we needed to use [Selenium](http://docs.seleniumhq.org/download/). Getting this setup is beyond the scope of this Readme.
+In order to fully test our gem, we needed to use the [Poltergeist gem](https://github.com/teampoltergeist/poltergeist) and [PhantomJS](http://phantomjs.org/). Getting this setup is beyond the scope of this Readme.
 
-Once you have everything setup, you should be able `appraisal rake` from the root directory have everything run. If you've installed Selenium properly, you should see an automated instance of your browser _(eg. Firefox)_ pop up and run through some of the integration tests.
+Once you have everything setup, you should be able to execute `appraisal rake` from the root directory have everything run.
 
 That's all!
 

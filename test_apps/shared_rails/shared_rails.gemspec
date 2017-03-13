@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.version     = "0.0.0"
   s.authors     = ["name"]
   s.email       = ["email"]
-  s.homepage    = "none"
+  s.homepage    = "https://github.com/rsantamaria/papercrop"
   s.summary     = "Shared content between rails test apps"
   s.description = "Shared content between rails test apps"
 

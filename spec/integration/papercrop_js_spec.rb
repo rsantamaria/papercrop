@@ -8,10 +8,10 @@ describe "Image crop with JS", :js => true do
     click_link "New Landscape"
 
     fill_in "Name", :with => "Mountains"
-    find("#landscape_picture").native.send_keys(File.expand_path("../../../#{mountains_img_path}", __FILE__))
+    attach_file "Picture", mountains_img_path
     click_button "Create Landscape"
 
-    sleep 2
+    sleep 1
     page.execute_script("jcrop_api.setSelect([300, 200, 700, 500])")
     page.execute_script('if ($("#picture_crop_y").val() == "199"){$("#picture_crop_y").val("200")}')
     page.execute_script('if ($("#picture_crop_w").val() == "399"){$("#picture_crop_w").val("400")}')
@@ -29,7 +29,7 @@ describe "Image crop with JS", :js => true do
     click_link "New Landscape"
 
     fill_in "Name", :with => "Mountains"
-    find("#landscape_picture").native.send_keys(File.expand_path(File.expand_path("../../../#{mountains_img_path}", __FILE__), __FILE__))
+    attach_file "Picture", mountains_img_path
     click_button "Create Landscape"
 
     click_button "Crop image"
@@ -37,7 +37,7 @@ describe "Image crop with JS", :js => true do
 
     click_link "Crop"
 
-    sleep 2
+    sleep 1
     page.execute_script("jcrop_api.setSelect([300, 200, 700, 500])")
     page.execute_script('if ($("#picture_crop_y").val() == "199"){$("#picture_crop_y").val("200")}')
     page.execute_script('if ($("#picture_crop_w").val() == "399"){$("#picture_crop_w").val("400")}')
