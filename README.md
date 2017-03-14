@@ -22,11 +22,12 @@ In your application.css
 ### Using Papercrop
 You are a few steps away to start cropping attachments. Let's start with the model, a user with avatar:
 
-    has_attached_file :avatar, :styles => {:thumb => '50x50', :medium => '100x100'}
+    has_attached_file :avatar, :styles => {:thumb => '50x50', :medium => '100x100'}, processors: [:papercrop]
     crop_attached_file :avatar
+
+We include a few styles and add Papercrop to the list of post-processors.
     
-By default, the crop area and the preview box will have an aspect ratio of 1:1. 
-You can modify that by passing a new aspect.
+By default, the crop area and the preview box will have an aspect ratio of 1:1. You can modify that by passing a new aspect.
 
     crop_attached_file :snapshot, :aspect => "16:9"
     
@@ -62,12 +63,6 @@ Regardless the model, you can always redefine/unlock aspect from the helper if y
 
     f.cropbox :snapshot, :width => 500, :aspect => 4..3
 
-**Chaining processors**
-
-Maybe you want to chain some custom processors to do amazing effects like crop+rotate images. Papercrop will add its processor in last place unless you declare it in the attachment definition
-
-    has_attached_file :landscape, :styles => {:big => '2000x1500'}, 
-                                  :processors => [:papercrop, :rotator]
 
 ### Running the Tests
 
