@@ -20,7 +20,8 @@ describe "Image crop" do
     find("#landscape_picture_original_w").value.should eq("1024")
     find("#landscape_picture_original_h").value.should eq("768")
     find("#landscape_picture_box_w").value.should      eq("600")
-    find("#picture_aspect").value.should               eq((4.0 / 3.0).to_s)
+    
+    find("#picture_cropbox")[:"data-aspect-ratio"].should eq((4.0 / 3.0).to_s)
 
     find("#picture_crop_x").set "300"
     find("#picture_crop_y").set "200"

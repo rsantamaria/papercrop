@@ -20,7 +20,6 @@ describe "Form Helpers" do
     assert_select @box.root, 'input#landscape_picture_original_w[value="1024"]'
     assert_select @box.root, 'input#landscape_picture_original_h[value="768"]'
     assert_select @box.root, 'input#landscape_picture_box_w[value="1024"]'
-    assert_select @box.root, "input#picture_aspect[value=\"#{@landscape.picture_aspect.to_s}\"]"
     assert_select @box.root, 'input#picture_crop_x'
     assert_select @box.root, 'input#picture_crop_y'
     assert_select @box.root, 'input#picture_crop_w'
@@ -29,6 +28,9 @@ describe "Form Helpers" do
     assert_select @box.root, 'div#picture_cropbox' do
       assert_select 'img', :src => @landscape.picture.path(:original)
     end
+
+    div = assert_select(@box.root, 'div#picture_cropbox').last
+    div["data-aspect-ratio"].should eq("1.3333333333333333")
   end
 
 
@@ -44,11 +46,49 @@ describe "Form Helpers" do
 
   it "builds the crop box with unlocked aspect flag" do
     form_for @landscape do |f|
-      @box = f.cropbox(:picture, :width => 400, :aspect => false)
+      @box = f.cropbox(:picture, :width => 400, :jcrop => {:aspect_ratio => false})
     end
     @box = HTML::Document.new(@box)
 
-    assert_select @box.root, 'input#picture_aspect[value="false"]'
+    div = assert_select(@box.root, 'div#picture_cropbox').last
+    div["data-aspect-ratio"].should eq("false")
+  end
+
+
+  it "builds the crop box with jcrop options (defaults)" do
+    form_for @landscape do |f|
+      @box = f.cropbox(:picture, :width => 400)
+    end
+    @box = HTML::Document.new(@box)
+
+    div = assert_select(@box.root, 'div#picture_cropbox').last
+    div["data-aspect-ratio"].should eq("1.3333333333333333")
+    div["data-set-select"].should eq("[0,0,512,384]")
+  end
+
+
+  it "builds the crop box with jcrop options" do
+    form_for @landscape do |f|
+      @box = f.cropbox(:picture, :width => 400, :jcrop => {:aspect_ratio => 1.5, :set_select => [50, 50, 400, 300]})
+    end
+    @box = HTML::Document.new(@box)
+
+    div = assert_select(@box.root, 'div#picture_cropbox').last
+    div["data-aspect-ratio"].should eq("1.5")
+    div["data-set-select"].should eq("[50,50,400,300]")
+  end
+
+
+  it "builds an empty box if there's no attachment" do 
+    @landscape.picture = nil
+
+    form_for @landscape do |f|
+      @box = f.cropbox(:picture, :width => 400)
+    end
+    @box = HTML::Document.new(@box)
+
+    assert_select @box.root, 'div#picture_cropbox img', :count => 0
+    assert_select @box.root, 'div#picture_cropbox_blank'
   end
 
 
@@ -65,7 +105,7 @@ describe "Form Helpers" do
   end
 
 
-  it "build the preview box with different width" do
+  it "builds the preview box with different width" do
     form_for @landscape do |f|
       @box = f.crop_preview(:picture, :width => 40)
     end

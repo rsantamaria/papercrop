@@ -38,33 +38,39 @@ module Papercrop
     # You can restrict it by setting the :width option to the width you want.
     #
     #   cropbox :avatar, :width => 650
-    #
-    # You can override the aspect ratio used by Jcrop, and even unlock it by setting :aspect to a new value or false
     # 
-    #   cropbox :avatar, :width => 650, :aspect => false
+    # Also, you can use some of the options jcrop has in its api for extra customization.
+    # @see http://deepliquid.com/content/Jcrop_Manual.html 
     #
+    #   cropbox :avatar, :width => 650, :jcrop => {:aspect_ratio => 1, :set_select => [0, 0, 500, 500]}
+    #
+    # Keep in mind that calling the cropbox with an empty attachment will result into an empty div
+    # 
     # @param attachment [Symbol] attachment name
     # @param opts [Hash]
+    # @option opts [Integer] :width 
+    # @option opts [Float] :aspect_ratio Through :jcrop
+    # @option opts [Array] :set_select Through :jcrop
     def cropbox(attachment, opts = {})
-      attachment      = attachment.to_sym
-      original_width  = self.object.image_geometry(attachment, :original).width.to_i
-      original_height = self.object.image_geometry(attachment, :original).height.to_i
-      box_width       = opts.fetch :width,  original_width
-      aspect          = opts.fetch :aspect, self.object.send(:"#{attachment}_aspect")
+      cropbox = Papercrop::Cropbox.new(object, attachment)
 
-      if self.object.send(attachment).class == Paperclip::Attachment
-        box  = self.hidden_field(:"#{attachment}_original_w", :value => original_width)
-        box << self.hidden_field(:"#{attachment}_original_h", :value => original_height)
-        box << self.hidden_field(:"#{attachment}_box_w",      :value => box_width)
-        box << self.hidden_field(:"#{attachment}_aspect",     :value => aspect, :id => "#{attachment}_aspect")
-        
+      if cropbox.image_is_present?
+        box_width = opts.fetch :width, cropbox.original_width
+
+        box  = hidden_field(:"#{attachment}_original_w", :value => cropbox.original_width)
+        box << hidden_field(:"#{attachment}_original_h", :value => cropbox.original_height)
+        box << hidden_field(:"#{attachment}_box_w",      :value => box_width)
+
         for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] do
-          box << self.hidden_field(:"#{attachment}_#{attribute}", :id => "#{attachment}_#{attribute}")
+          box << hidden_field(:"#{attachment}_#{attribute}", :id => "#{attachment}_#{attribute}")
         end
 
         crop_image = @template.image_tag(self.object.send(attachment).url)
+        jcrop_opts = cropbox.parse_jcrop_opts(opts[:jcrop] || {})
 
-        box << @template.content_tag(:div, crop_image, :id => "#{attachment}_cropbox")
+        box << @template.content_tag(:div, crop_image, :id => "#{attachment}_cropbox", :data => jcrop_opts)
+      else
+        @template.content_tag(:div, "", :id => "#{attachment}_cropbox_blank")
       end
     end
   end

@@ -58,9 +58,15 @@ You can unlock the aspect ratio if you pass false as argument. NOTE: *preview wi
 
     crop_attached_file :snapshot, :aspect => false
 
+**Jcrop options**
+
 Regardless the model, you can always redefine/unlock aspect from the helper if you need to.
 
-    f.cropbox :snapshot, :width => 500, :aspect => 4..3
+    f.cropbox :snapshot, :width => 500, :jcrop => {:aspect => 4.0/3.0}
+
+Or set an initial selection area.
+
+    f.cropbox :snapshot, :jcrop => {:set_select => [50, 50, 400, 300]}
 
 **Chaining processors**
 
