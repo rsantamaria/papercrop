@@ -68,6 +68,8 @@ Or set an initial selection area.
 
     f.cropbox :snapshot, :jcrop => {:set_select => [50, 50, 400, 300]}
 
+See more options at [JCrop official site](http://deepliquid.com/content/Jcrop_Manual.html)
+
 **Chaining processors**
 
 Maybe you want to chain some custom processors to do amazing effects like crop+rotate images. Papercrop will add its processor in last place unless you declare it in the attachment definition

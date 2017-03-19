@@ -49,8 +49,7 @@ module Papercrop
     # @param attachment [Symbol] attachment name
     # @param opts [Hash]
     # @option opts [Integer] :width 
-    # @option opts [Float] :aspect_ratio Through :jcrop
-    # @option opts [Array] :set_select Through :jcrop
+    # @option opts [Hash] :jcrop Jcrop extra options. See Papercrop::Cropbox for more info
     def cropbox(attachment, opts = {})
       cropbox = Papercrop::Cropbox.new(object, attachment)
 

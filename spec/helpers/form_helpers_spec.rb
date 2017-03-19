@@ -55,18 +55,6 @@ describe "Form Helpers" do
   end
 
 
-  it "builds the crop box with jcrop options (defaults)" do
-    form_for @landscape do |f|
-      @box = f.cropbox(:picture, :width => 400)
-    end
-    @box = HTML::Document.new(@box)
-
-    div = assert_select(@box.root, 'div#picture_cropbox').last
-    div["data-aspect-ratio"].should eq("1.3333333333333333")
-    div["data-set-select"].should eq("[0,0,512,384]")
-  end
-
-
   it "builds the crop box with jcrop options" do
     form_for @landscape do |f|
       @box = f.cropbox(:picture, :width => 400, :jcrop => {:aspect_ratio => 1.5, :set_select => [50, 50, 400, 300]})
@@ -76,6 +64,12 @@ describe "Form Helpers" do
     div = assert_select(@box.root, 'div#picture_cropbox').last
     div["data-aspect-ratio"].should eq("1.5")
     div["data-set-select"].should eq("[50,50,400,300]")
+    div["data-min-size"].should eq("[0,0]")
+    div["data-max-size"].should eq("[0,0]")
+    div["data-bg-color"].should eq("black")
+    div["data-bg-opacity"].should eq("0.6")
+    div["data-allow-resize"].should eq("true")
+    div["data-allow-select"].should eq("true")
   end
 
 
