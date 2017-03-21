@@ -30,7 +30,7 @@ You can modify that by passing a new aspect.
 
     crop_attached_file :snapshot, :aspect => "16:9"
     
-On the controller you can render a view after user creation, create a simple crop action, etc... whatever you like the most. Inside the form of a persisted user:
+On the controller you can render a view after user creation, create a simple crop action, etc... whatever you like the most. Inside the form of a user with persisted avatar:
 
     <%= form_for @user do |f| %>
       <%= f.cropbox :avatar %>
@@ -38,7 +38,7 @@ On the controller you can render a view after user creation, create a simple cro
       <%= f.submit 'Save' %>
     <% end %>
     
-Both helpers accept a :width option to customize their dimensions. The preview box has width 100 by default but the cropbox is unlimited in size (takes the original image width), so setting the cropbox width is interesting to avoid layout breaks with huge images. 
+Both helpers accept a :width option to customize their dimensions. The preview box has width 100 by default but the cropbox is unlimited in size (takes the original image width), so setting the cropbox width is interesting to avoid layout breaks with huge images. :width is an alias for :box_width
 
     <%= form_for @user do |f| %>
       <%= f.cropbox :avatar, :width => 500 %>
@@ -53,34 +53,34 @@ If you're rendering it on ajax ensure to call init_papercrop() in js after loadi
 To allow rails to save changes in your controller, you need to permit the fields papercrop uses. For example, if your model with the attached image is named user and the attachment is named avatar:
 
 ```ruby
-params.require(:user).permit(:avatar, 
-   :avatar_original_w, 
-   :avatar_original_h, 
-   :avatar_box_w, 
-   :avatar_aspect, 
-   :avatar_crop_x, 
-   :avatar_crop_y, 
-   :avatar_crop_w, 
-   :avatar_crop_h)
+params.require(:user).permit(
+  :avatar, 
+  :avatar_original_w, 
+  :avatar_original_h,
+  :avatar_crop_x, 
+  :avatar_crop_y, 
+  :avatar_crop_w, 
+  :avatar_crop_h
+)
 ```
 
 ### Advanced features
 
 **Unlock aspect ratio**
 
-You can unlock the aspect ratio if you pass false as argument. NOTE: *preview will be disabled*
+You can unlock the aspect ratio if you pass false as argument. :aspect is an alias for :aspect_ratio. NOTE: *preview will be disabled*
 
     crop_attached_file :snapshot, :aspect => false
 
-**Jcrop options**
+**More Jcrop options**
 
 Regardless the model, you can always redefine/unlock aspect from the helper if you need to.
 
-    f.cropbox :snapshot, :width => 500, :jcrop => {:aspect => 4.0/3.0}
+    f.cropbox :snapshot, :box_width => 500, :aspect_ratio => 4.0/3.0
 
 Or set an initial selection area.
 
-    f.cropbox :snapshot, :jcrop => {:set_select => [50, 50, 400, 300]}
+    f.cropbox :snapshot, :set_select => [50, 50, 400, 300]
 
 See more options at [JCrop official site](http://deepliquid.com/content/Jcrop_Manual.html)
 

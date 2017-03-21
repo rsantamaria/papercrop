@@ -35,6 +35,8 @@ describe "Image crop with JS", :js => true do
     click_button "Crop image"
     click_link "Back"
 
+    sleep 1
+
     click_link "Crop"
 
     sleep 1

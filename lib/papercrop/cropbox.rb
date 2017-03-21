@@ -48,26 +48,19 @@ class Papercrop::Cropbox
 
   # Parses and sets defaults for the extra Jcrop options
   # @see http://deepliquid.com/content/Jcrop_Manual.html for more info
-  # @param opts [Hash]
-  # @option opts [Float] :aspect_ratio
-  # @option opts [Array] :set_select array [ x, y, x2, y2 ] 
-  # @option opts [Array] :min_size array [ w, h ]
-  # @option opts [Array] :max_size array [ w, h ]
-  # @option opts [String] :bg_color css value
-  # @option opts [Float] :bg_opacity decimal 0 - 1 
-  # @option opts [Boolean] :allow_resize (true) 
-  # @option opts [Boolean] :allow_select (true) 
+  # @param opts [Hash] Options for jcrop, :width and :aspect are aliases for :box_width and :aspect_ratio
+  # This is because retro compatibility with older versions.
   def parse_jcrop_opts(opts)
-    parsed = {}
+    parsed = opts.clone
 
-    parsed[:aspect_ratio] = opts.fetch :aspect_ratio, @model.send("#{@attachment_name}_aspect")
-    parsed[:set_select]   = opts.fetch :set_select,   [0, 0, (original_width / 2), (original_height / 2)]
-    parsed[:min_size]     = opts.fetch :min_size,     [0, 0]
-    parsed[:max_size]     = opts.fetch :max_size,     [0, 0]
-    parsed[:bg_color]     = opts.fetch :bg_color,     'black'
-    parsed[:bg_opacity]   = opts.fetch :bg_opacity,   0.6
-    parsed[:allow_resize] = opts.fetch :allow_resize, true
-    parsed[:allow_select] = opts.fetch :allow_select, true
+    parsed[:box_width]    = parsed[:width]  if parsed[:box_width].nil?
+    parsed[:aspect_ratio] = parsed[:aspect] if parsed[:aspect_ratio].nil?
+    parsed.delete(:width)
+    parsed.delete(:aspect)
+
+    parsed[:box_width]    = original_width                            if parsed[:box_width].nil?
+    parsed[:aspect_ratio] = @model.send("#{@attachment_name}_aspect") if parsed[:aspect_ratio].nil?
+    parsed[:set_select]   = parsed.fetch :set_select, [0, 0, (original_width / 2), (original_height / 2)]
   
     parsed
   end

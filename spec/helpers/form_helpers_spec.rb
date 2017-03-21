@@ -19,7 +19,6 @@ describe "Form Helpers" do
 
     assert_select @box.root, 'input#landscape_picture_original_w[value="1024"]'
     assert_select @box.root, 'input#landscape_picture_original_h[value="768"]'
-    assert_select @box.root, 'input#landscape_picture_box_w[value="1024"]'
     assert_select @box.root, 'input#picture_crop_x'
     assert_select @box.root, 'input#picture_crop_y'
     assert_select @box.root, 'input#picture_crop_w'
@@ -31,22 +30,13 @@ describe "Form Helpers" do
 
     div = assert_select(@box.root, 'div#picture_cropbox').last
     div["data-aspect-ratio"].should eq("1.3333333333333333")
-  end
-
-
-  it "builds the crop box with different width" do
-    form_for @landscape do |f|
-      @box = f.cropbox(:picture, :width => 400)
-    end
-    @box = HTML::Document.new(@box)
-
-    assert_select @box.root, 'input#landscape_picture_box_w[value="400"]'
+    div["data-box-width"].should eq("1024")
   end
 
 
   it "builds the crop box with unlocked aspect flag" do
     form_for @landscape do |f|
-      @box = f.cropbox(:picture, :width => 400, :jcrop => {:aspect_ratio => false})
+      @box = f.cropbox(:picture, :width => 400, :aspect_ratio => false)
     end
     @box = HTML::Document.new(@box)
 
@@ -57,19 +47,14 @@ describe "Form Helpers" do
 
   it "builds the crop box with jcrop options" do
     form_for @landscape do |f|
-      @box = f.cropbox(:picture, :width => 400, :jcrop => {:aspect_ratio => 1.5, :set_select => [50, 50, 400, 300]})
+      @box = f.cropbox(:picture, :width => 400, :aspect_ratio => 1.5, :set_select => [50, 50, 400, 300])
     end
     @box = HTML::Document.new(@box)
 
     div = assert_select(@box.root, 'div#picture_cropbox').last
     div["data-aspect-ratio"].should eq("1.5")
     div["data-set-select"].should eq("[50,50,400,300]")
-    div["data-min-size"].should eq("[0,0]")
-    div["data-max-size"].should eq("[0,0]")
-    div["data-bg-color"].should eq("black")
-    div["data-bg-opacity"].should eq("0.6")
-    div["data-allow-resize"].should eq("true")
-    div["data-allow-select"].should eq("true")
+    div["data-box-width"].should eq("400")
   end
 
 
