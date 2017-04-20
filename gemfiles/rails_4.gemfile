@@ -2,8 +2,8 @@
 
 source "http://rubygems.org"
 
+gem "shared_rails", :path => "../test_apps/shared_rails"
 gem "rails", "4.0.2"
 gem "paperclip", "4.1.0"
-gem 'shared_rails', :path => "../test_apps/shared_rails"
 
 gemspec :path => "../"
