@@ -25,7 +25,7 @@ describe "Form Helpers" do
     assert_select @box.root, 'input#picture_crop_h'
 
     assert_select @box.root, 'div#picture_cropbox' do
-      assert_select 'img', :src => @landscape.picture.path(:original)
+      assert_select "img[src=#{@landscape.picture.url(:original)}]"
     end
 
     div = assert_select(@box.root, 'div#picture_cropbox').last
