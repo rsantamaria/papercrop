@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency "jquery-rails"
   s.add_dependency "paperclip", ">= 3.4"
 
-  s.add_development_dependency "rspec-rails", "~> 2.0"
+  s.add_development_dependency "rspec-rails", "~> 3.0"
   s.add_development_dependency "capybara", ">= 1.1.1"
   s.add_development_dependency "mocha"
   s.add_development_dependency "rmagick"

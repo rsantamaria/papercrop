@@ -29,8 +29,8 @@ describe "Form Helpers" do
     end
 
     div = assert_select(@box.root, 'div#picture_cropbox').last
-    div["data-aspect-ratio"].should eq("1.3333333333333333")
-    div["data-box-width"].should eq("1024")
+    expect(div["data-aspect-ratio"]).to eq("1.3333333333333333")
+    expect(div["data-box-width"]).to eq("1024")
   end
 
 
@@ -41,7 +41,7 @@ describe "Form Helpers" do
     @box = HTML::Document.new(@box)
 
     div = assert_select(@box.root, 'div#picture_cropbox').last
-    div["data-aspect-ratio"].should eq("false")
+    expect(div["data-aspect-ratio"]).to eq("false")
   end
 
 
@@ -52,9 +52,9 @@ describe "Form Helpers" do
     @box = HTML::Document.new(@box)
 
     div = assert_select(@box.root, 'div#picture_cropbox').last
-    div["data-aspect-ratio"].should eq("1.5")
-    div["data-set-select"].should eq("[50,50,400,300]")
-    div["data-box-width"].should eq("400")
+    expect(div["data-aspect-ratio"]).to eq("1.5")
+    expect(div["data-set-select"]).to eq("[50,50,400,300]")
+    expect(div["data-box-width"]).to eq("400")
   end
 
 
