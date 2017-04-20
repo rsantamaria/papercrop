@@ -9,15 +9,9 @@ Gemfile.lock
 gemfiles/*.gemfile.lock
 .byebug_history
 
-test_apps/rails_3_2/.bundle
-test_apps/rails_3_2/Gemfile.lock
-test_apps/rails_3_2/db/*.sqlite3
-test_apps/rails_3_2/log/*.log
-test_apps/rails_3_2/tmp
-test_apps/rails_3_2/public/assets
-test_apps/rails_4/.bundle
-test_apps/rails_4/Gemfile.lock
-test_apps/rails_4/db/*.sqlite3
-test_apps/rails_4/log/*.log
-test_apps/rails_4/tmp
-test_apps/rails_4/public/assets
+test_apps/rails_*/.bundle
+test_apps/rails_*/Gemfile.lock
+test_apps/rails_*/db/*.sqlite3
+test_apps/rails_*/log/*.log
+test_apps/rails_*/tmp
+test_apps/rails_*/public/assets

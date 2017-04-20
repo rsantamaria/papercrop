@@ -91,7 +91,11 @@ describe "Model Extension" do
 
     expect(definitions[:processed][:processors]).to eq([:papercrop, :rotator])
 
-    Landscape._update_callbacks.delete_if {|e| e.instance_values['filter'] == :reprocess_to_crop_processed_attachment } 
+    Landscape._update_callbacks.each do |e|
+      if e.instance_values['filter'] == :reprocess_to_crop_processed_attachment
+        Landscape._update_callbacks.delete(e)
+      end
+    end
   end
 
 
