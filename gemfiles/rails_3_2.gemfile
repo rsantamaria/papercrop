@@ -3,7 +3,8 @@
 source "http://rubygems.org"
 
 gem "shared_rails", :path => "../test_apps/shared_rails"
-gem "rails", "3.2.13"
+gem "rake", "< 11"
+gem "rails", "3.2.22.5"
 gem "paperclip", "3.4.0"
 
 gemspec :path => "../"
