@@ -1,6 +1,6 @@
 class LandscapesController < ApplicationController
 
-  if Rails::VERSION::MAJOR == 4
+  if Rails::VERSION::MAJOR >= 4
     before_action :set_landscape, :only => [:show, :edit, :update, :crop, :destroy]
   else
     before_filter :set_landscape, :only => [:show, :edit, :update, :crop, :destroy]
@@ -91,7 +91,7 @@ class LandscapesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def landscape_params
-      if Rails::VERSION::MAJOR == 4
+      if Rails::VERSION::MAJOR >= 4
         params.require(:landscape).permit(:name, :picture, :picture_crop_x, :picture_crop_y, :picture_crop_w, :picture_crop_h)
       else
         params[:landscape]
@@ -100,6 +100,6 @@ class LandscapesController < ApplicationController
 
 
     def model_update_method
-      Rails::VERSION::MAJOR == 4 ? :update : :update_attributes
+      Rails::VERSION::MAJOR >= 4 ? :update : :update_attributes
     end
 end

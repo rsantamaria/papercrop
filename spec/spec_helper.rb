@@ -4,10 +4,10 @@ ENV["TEST_APP"]  ||= 'rails_4'
 
 require File.expand_path("../../test_apps/#{ENV["TEST_APP"]}/config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'capybara/poltergeist'
 require 'database_cleaner'
 require 'byebug'
+require 'rspec-html-matchers'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -40,6 +40,8 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  config.infer_spec_type_from_file_location!
 
   config.include Capybara::DSL
   Capybara.javascript_driver = :poltergeist

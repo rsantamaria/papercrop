@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 
 gem "shared_rails", path: "../test_apps/shared_rails"
-gem "rails", "4.0.13"
-gem "paperclip", "4.1.0"
+gem "rails", "5.0.2"
+gem "paperclip", "~> 4.3"
 
 gemspec path: "../"

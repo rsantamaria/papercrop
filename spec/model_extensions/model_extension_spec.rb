@@ -21,10 +21,10 @@ describe "Model Extension" do
     @landscape.picture_crop_h = 300
     @landscape.reset_crop_attributes_of(:picture)
 
-    @landscape.picture_crop_x.should be(nil)
-    @landscape.picture_crop_y.should be(nil)
-    @landscape.picture_crop_w.should be(nil)
-    @landscape.picture_crop_h.should be(nil)
+    expect(@landscape.picture_crop_x).to be(nil)
+    expect(@landscape.picture_crop_y).to be(nil)
+    expect(@landscape.picture_crop_w).to be(nil)
+    expect(@landscape.picture_crop_h).to be(nil)
   end
 
 
@@ -35,51 +35,51 @@ describe "Model Extension" do
     @landscape.picture_crop_h = 300
     @landscape.save
     # Rounding to account for different versions of imagemagick
-    compare_images(expected_mountains_img_path, @landscape.picture.path(:medium)).round(2).should eq(0.0)
+    expect(compare_images(expected_mountains_img_path, @landscape.picture.path(:medium)).round(2)).to eq(0.0)
   end
 
 
   it "defines an after update callback" do
     @landscape._update_callbacks.map do |e|
-      e.instance_values['filter'].should eq(:reprocess_to_crop_picture_attachment) 
+      expect(e.instance_values['filter']).to eq(:reprocess_to_crop_picture_attachment) 
     end
   end
 
 
   it "includes accessors to the model" do
     %w{crop_x crop_y crop_w crop_h original_w original_h box_w aspect}.each do |m|
-      @landscape.should respond_to(:"picture_#{m}")
-      @landscape.should respond_to(:"picture_#{m}=")
+      expect(@landscape).to respond_to(:"picture_#{m}")
+      expect(@landscape).to respond_to(:"picture_#{m}=")
     end
   end
 
   
   it "knows when to crop" do
-    @landscape.cropping?(:picture).should be(false)
+    expect(@landscape.cropping?(:picture)).to be(false)
     @landscape.picture_crop_x = 0
     @landscape.picture_crop_y = 0
     @landscape.picture_crop_w = 400
     @landscape.picture_crop_h = 300
-    @landscape.cropping?(:picture).should be(true)
+    expect(@landscape.cropping?(:picture)).to be(true)
   end
 
 
   it "normalizes aspect ratio" do 
-    Landscape.normalize_aspect(4..3).should     eq(4..3)
-    Landscape.normalize_aspect("4:3").should    eq(4..3)
-    Landscape.normalize_aspect("4".."3").should eq(4..3)
-    Landscape.normalize_aspect(4.0..3.0).should eq(4..3)
-    Landscape.normalize_aspect(false).should    eq(false)
-    Landscape.normalize_aspect(nil).should      eq(1..1)
-    Landscape.normalize_aspect(true).should     eq(1..1)
-    Landscape.normalize_aspect("foo").should    eq(1..1)
+    expect(Landscape.normalize_aspect(4..3)).to     eq(4..3)
+    expect(Landscape.normalize_aspect("4:3")).to    eq(4..3)
+    expect(Landscape.normalize_aspect("4".."3")).to eq(4..3)
+    expect(Landscape.normalize_aspect(4.0..3.0)).to eq(4..3)
+    expect(Landscape.normalize_aspect(false)).to    eq(false)
+    expect(Landscape.normalize_aspect(nil)).to      eq(1..1)
+    expect(Landscape.normalize_aspect(true)).to     eq(1..1)
+    expect(Landscape.normalize_aspect("foo")).to    eq(1..1)
   end
 
 
   it "registers the post processor" do
     definitions = retrieve_attachment_definitions_for(Landscape)
 
-    definitions[:picture][:processors].should eq([:papercrop])
+    expect(definitions[:picture][:processors]).to eq([:papercrop])
   end
 
 
@@ -89,29 +89,33 @@ describe "Model Extension" do
 
     definitions = retrieve_attachment_definitions_for(Landscape)
 
-    definitions[:processed][:processors].should eq([:papercrop, :rotator])
+    expect(definitions[:processed][:processors]).to eq([:papercrop, :rotator])
 
-    Landscape._update_callbacks.delete_if {|e| e.instance_values['filter'] == :reprocess_to_crop_processed_attachment } 
+    Landscape._update_callbacks.each do |e|
+      if e.instance_values['filter'] == :reprocess_to_crop_processed_attachment
+        Landscape._update_callbacks.delete(e)
+      end
+    end
   end
 
 
   it "returns image properties" do
-    @landscape.picture_aspect.should eq(4.0 / 3.0)
+    expect(@landscape.picture_aspect).to eq(4.0 / 3.0)
 
-    @landscape.image_geometry(:picture).width.should  eq(1024)
-    @landscape.image_geometry(:picture).height.should eq(768)
+    expect(@landscape.image_geometry(:picture).width).to  eq(1024)
+    expect(@landscape.image_geometry(:picture).height).to eq(768)
   end
 
 
   it "returns image geometry for two attachments" do
-    @user.image_geometry(:avatar).width.should              eq(900)
-    @user.image_geometry(:avatar).height.should             eq(900)
-    @user.image_geometry(:avatar, :medium).width.should     eq(200)
-    @user.image_geometry(:avatar, :medium).height.should    eq(200)
-    @user.image_geometry(:signature).width.should           eq(1024)
-    @user.image_geometry(:signature).height.should          eq(768)
-    @user.image_geometry(:signature, :medium).width.should  eq(496)
-    @user.image_geometry(:signature, :medium).height.should eq(279)
+    expect(@user.image_geometry(:avatar).width).to              eq(900)
+    expect(@user.image_geometry(:avatar).height).to             eq(900)
+    expect(@user.image_geometry(:avatar, :medium).width).to     eq(200)
+    expect(@user.image_geometry(:avatar, :medium).height).to    eq(200)
+    expect(@user.image_geometry(:signature).width).to           eq(1024)
+    expect(@user.image_geometry(:signature).height).to          eq(768)
+    expect(@user.image_geometry(:signature, :medium).width).to  eq(496)
+    expect(@user.image_geometry(:signature, :medium).height).to eq(279)
   end
 
 
