@@ -19,7 +19,7 @@ describe "Image crop" do
 
     find("#landscape_picture_original_w").value.should eq("1024")
     find("#landscape_picture_original_h").value.should eq("768")
-    
+
     find("#picture_cropbox")[:"data-box-width"].should eq("600")
     find("#picture_cropbox")[:"data-aspect-ratio"].should eq((4.0 / 3.0).to_s)
 
@@ -27,9 +27,11 @@ describe "Image crop" do
     find("#picture_crop_y").set "200"
     find("#picture_crop_w").set "400"
     find("#picture_crop_h").set "300"
+    picture_updated_at = Landscape.last.picture_updated_at
 
     click_button "Crop image"
-    
+
+    expect(Landscape.last.picture_updated_at).to_not eq(picture_updated_at)
     compare_images(expected_mountains_img_path, Landscape.last.picture.path(:medium)).round(2).should eq(0.0)
   end
 end
