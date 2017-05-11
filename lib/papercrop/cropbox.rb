@@ -61,7 +61,8 @@ class Papercrop::Cropbox
     parsed[:box_width]    = original_width                            if parsed[:box_width].nil?
     parsed[:aspect_ratio] = @model.send("#{@attachment_name}_aspect") if parsed[:aspect_ratio].nil?
     parsed[:set_select]   = parsed.fetch :set_select, [0, 0, (original_width / 2), (original_height / 2)]
-  
+    parsed[:true_size] = [original_width, original_height]
+
     parsed
   end
 end
